@@ -1,9 +1,14 @@
-oagis-ws-itemmaster
+OAGIS ItemMaster Web Service
 ===================
 
 http://soaeasy.org
 
-OAGIS version 10 - ItemMaster Web Service
+* OAGIS version 10 ItemMaster BOD
+* EJB3
+* Apache CXF
+* Basic Authentication using JBoss AS 7.2
+
+And of course Java!
 
 License
 -------
