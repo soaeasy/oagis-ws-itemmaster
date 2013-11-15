@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.soaeasy.oagis.ws</groupId>
+  <artifactId>soaeasy-oagis-ws-itemmaster</artifactId>
+  <version>1.0.0.Alpha1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>OAGIS version 10 - ItemMaster Web Service</name>
+  <description>OAGIS version 10 - ItemMaster Web Service</description>
+  <url>http://soaeasy.org</url>
+  <inceptionYear>2013</inceptionYear>
+
+  <licenses>
+    <license>
+    <name>GNU Lesser General Public License</name>
+    <url>http://soaeasy.org/license.html</url>
+    <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>SOA Easy</name>
+    <url>http://soaeasy.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>eagleigor</id>
+      <name>Igor Shulika</name>
+      <organization>SOA Easy</organization>
+      <organizationUrl>http://soaeasy.org</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <properties>
+    <!-- ******************************************************************* -->
+    <!-- Manifest File options                                               -->
+    <!-- ******************************************************************* -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <manifest.built.by>${env.USERNAME}</manifest.built.by>
+
+    <manifest.specification.title>${project.name}</manifest.specification.title>
+    <manifest.specification.version>1.0.0</manifest.specification.version>
+    <manifest.specification.vendor>SOA Easy</manifest.specification.vendor>
+
+    <manifest.implementation.title>${project.artifactId}-${project.version}</manifest.implementation.title>
+    <manifest.implementation.vendor>SOA Easy</manifest.implementation.vendor>
+    <manifest.implementation.vendor.id>org.soaeasy</manifest.implementation.vendor.id>
+    <manifest.implementation.version>${project.version}</manifest.implementation.version>
+
+    <manifest.bundle.symbolic.name>org.soaeasy</manifest.bundle.symbolic.name>
+    <manifest.bundle.vendor>SOA Easy</manifest.bundle.vendor>
+    <manifest.bundle.vendor.id>org.soaeasy</manifest.bundle.vendor.id>
+    <manifest.bundle.copyright>2013</manifest.bundle.copyright>
+    <manifest.bundle.license>http://soaeasy.org</manifest.bundle.license>
+    <manifest.bundle.docurl>http://soaeasy.org</manifest.bundle.docurl>
+    <manifest.bundle.version>${project.version}</manifest.bundle.version>
+    <manifest.bundle.manifest.version>2</manifest.bundle.manifest.version>
+    <manifest.bundle.classpath>.</manifest.bundle.classpath>
+    <manifest.export.package>.</manifest.export.package>
+    <donotcopy.bundle.plugin>(CVS|.svn|.git)</donotcopy.bundle.plugin>
+
+    <!-- ******************************************************************* -->
+    <!-- Plugins Versions                                                    -->
+    <!-- ******************************************************************* -->
+     <version.jar.plugin>2.4</version.jar.plugin>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.2.8</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.ejb</groupId>
+      <artifactId>javax.ejb-api</artifactId>
+      <version>3.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.ejb</groupId>
+      <artifactId>javax.ejb-api</artifactId>
+      <version>3.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.2-b03</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- ******************************************************************* -->
+    <!-- JBoss Dependencies                                                  -->
+    <!-- ******************************************************************* -->
+    <dependency>
+      <groupId>org.jboss.ws</groupId>
+      <artifactId>jbossws-api</artifactId>
+      <version>1.0.2.Final</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.ejb3</groupId>
+      <artifactId>jboss-ejb3-ext-api</artifactId>
+      <version>2.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/src/main/java</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+      </resource>
+    </resources>
+    <plugins>
+<!--
+      <plugin>
+        <groupId>org.jvnet.jax-ws-commons</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <version>2.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <encoding>UTF-8</encoding>
+              <genJWS>true</genJWS>
+              <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+              <implDestDir>${basedir}/src/main/java</implDestDir>
+              <wsdlDirectory>${basedir}/src/main/resources/META-INF/oagis/10/contract</wsdlDirectory>
+              <wsdlLocation>META-INF/oagis/10/contract/ItemMaster.wsdl</wsdlLocation>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${version.jar.plugin}</version>
+        <configuration>
+          <excludes>
+            <exclude>**/*.java</exclude>
+          </excludes>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addClasspath>true</addClasspath>
+            </manifest>
+            <manifestEntries>
+              <Implementation-URL>${project.url}</Implementation-URL>
+              <Java-Version>${java.version}</Java-Version>
+              <Java-Vendor>${java.vendor}</Java-Vendor>
+              <Os-Name>${os.name}</Os-Name>
+              <Os-Arch>${os.arch}</Os-Arch>
+              <Os-Version>${os.version}</Os-Version>
+              <Scm-Url>${project.scm.url}</Scm-Url>
+              <Scm-Connection>${project.scm.connection}</Scm-Connection>
+              <Scm-Revision>${buildNumber}</Scm-Revision>
+              <Specification-Title>${manifest.specification.title}</Specification-Title>
+              <Specification-Version>${manifest.specification.version}</Specification-Version>
+              <Specification-Vendor>${manifest.specification.vendor}</Specification-Vendor>
+              <Specification-Vendor-Id>${manifest.implementation.vendor.id}</Specification-Vendor-Id>
+              <Implementation-Title>${manifest.implementation.title}</Implementation-Title>
+              <Implementation-Version>${manifest.implementation.version}</Implementation-Version>
+              <Implementation-Vendor>${manifest.implementation.vendor}</Implementation-Vendor>
+              <Implementation-Vendor-Id>${manifest.implementation.vendor.id}</Implementation-Vendor-Id>
+              <Built-By>${manifest.built.by}</Built-By>
+              <Build-Timestamp>${build.datetime}</Build-Timestamp>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

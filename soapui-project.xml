@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="OAGIS_ItemMaster_v10" resourceRoot="" soapui-version="4.6.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ItemMasterBinding" type="wsdl" bindingName="{http://www.soaeasy.org/ws/oagis/itemmaster/10}ItemMasterBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ws/oagis/itemmaster?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ws/oagis/itemmaster?wsdl"><con:part><con:url>http://localhost:8080/ws/oagis/itemmaster?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="OAGIS_ItemMaster_v10" targetNamespace="http://www.soaeasy.org/ws/oagis/itemmaster/10" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:types="http://www.openapplications.org/oagis/10" xmlns:tns="http://www.soaeasy.org/ws/oagis/itemmaster/10" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>OAGIS version 10 - ItemMaster Web Service</wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.openapplications.org/oagis/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:include schemaLocation="http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/GetItemMaster.xsd"/>
+      <xsd:include schemaLocation="http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/ShowItemMaster.xsd"/>
+      <xsd:include schemaLocation="http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/SyncItemMaster.xsd"/>
+      <xsd:include schemaLocation="http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/SyncResponseItemMaster.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SyncItemMaster">
+    <wsdl:part element="types:SyncItemMaster" name="SyncItemMaster"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SyncResponseItemMaster">
+    <wsdl:part element="types:SyncResponseItemMaster" name="SyncResponseItemMaster"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetItemMaster">
+    <wsdl:part element="types:GetItemMaster" name="GetItemMaster"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ShowItemMaster">
+    <wsdl:part element="types:ShowItemMaster" name="ShowItemMaster"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ItemMasterPortType">
+    <wsdl:operation name="GetItemMaster">
+      <wsdl:input message="tns:GetItemMaster"></wsdl:input>
+      <wsdl:output message="tns:ShowItemMaster"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncItemMaster">
+      <wsdl:input message="tns:SyncItemMaster"></wsdl:input>
+      <wsdl:output message="tns:SyncResponseItemMaster"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ItemMasterBinding" type="tns:ItemMasterPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetItemMaster">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SyncItemMaster">
+      <soap:operation soapAction=""/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OAGIS_ItemMaster_v10">
+    <wsdl:port binding="tns:ItemMasterBinding" name="ItemMasterPort">
+      <soap:address location="http://localhost:8080/ws/oagis/itemmaster"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/GetItemMaster.xsd</con:url><con:content><![CDATA[<!--Schema agency: 	Open Applications Group 
+
+
+   OAGIS® Revision:    OAGIS 10_0  
+   Date:               09 Sept 2013
+   Copyright 1997-2013, All Rights Reserved 
+
+  	
+   Copyright (C) Open Applications Group (1997-2013). All Rights Reserved.
+  
+  
+   This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+   License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+
+   For support, more information, or to report implementation bugs, please contact the Open Applications Group at oagis@openapplications.org.
+    
+   XML Schema 
+     
+    Name: /OAGi-BPI-Platform/org_openapplications_oagis/10_0/Model/BODs/GetItemMaster.xsd-->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.openapplications.org/oagis/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/10">
+  <xsd:element id="oagis-id-e73766e8b70a47a1bbbe951f64225691" name="GetItemMaster" type="GetItemMasterType">
+    <xsd:annotation>
+      <xsd:documentation source="http://www.openapplications.org/oagis/10">The purpose of the GetItemMaster is to enable a business application module to request information concerning a specific ITEM from another business application.  The reply to this BOD is the ShowItemMaster.
+
+There are many possible business applications in several environments that may use this capability.  For example, an MRP, Inventory, or Manufacturing business application could use this to request item information.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType id="oagis-id-e2ccc91de0cd4b91b0b521c46d4d2133" name="GetItemMasterType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation source="http://www.openapplications.org/oagis/10">Is where the information that the BOD message carries is provided, in this case GetItemMaster. The information consists of a Verb and one or more Nouns. The verb (Get) indicates the action to be performed on the Noun (ItemMaster).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:any>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/ShowItemMaster.xsd</con:url><con:content><![CDATA[<!--Schema agency: 	Open Applications Group 
+
+
+   OAGIS® Revision:    OAGIS 10_0  
+   Date:               09 Sept 2013
+   Copyright 1997-2013, All Rights Reserved 
+
+  	
+   Copyright (C) Open Applications Group (1997-2013). All Rights Reserved.
+  
+  
+   This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+   License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+
+   For support, more information, or to report implementation bugs, please contact the Open Applications Group at oagis@openapplications.org.
+    
+   XML Schema 
+     
+    Name: /OAGi-BPI-Platform/org_openapplications_oagis/10_0/Model/BODs/ShowItemMaster.xsd-->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.openapplications.org/oagis/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/10">
+  <xsd:element id="oagis-id-ae15a1dd2ff94fb797bf38ec4d7558b6" name="ShowItemMaster" type="ShowItemMasterType">
+    <xsd:annotation>
+      <xsd:appinfo>Version 1.0</xsd:appinfo>
+      <xsd:documentation source="http://www.openapplications.org/oagis/10">The purpose of the ShowItemMaster is to supply ITEM Information to another business application module.  This request may be used as a response to a GetItemMaster request or as the result of some other business event.  This BOD does not usually cause updates to occur.
+
+There are many possible business applications in several environments that may use this capability.  For example, an MRP, Inventory, or Manufacturing business application could use this to request item information.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType id="oagis-id-673a72f474194ee5a755552579bc4f70" name="ShowItemMasterType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0">
+        <xsd:annotation>
+          <xsd:documentation source="http://www.openapplications.org/oagis/10">Is where the information that the BOD message carries is provided, in this case ShowItemMaster. The information consists of a Verb and one or more Nouns. The verb (Show) indicates the action to be performed on the Noun (ItemMaster).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:any>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/SyncItemMaster.xsd</con:url><con:content><![CDATA[<!--Schema agency: 	Open Applications Group 
+
+
+   OAGIS® Revision:    OAGIS 10_0  
+   Date:               09 Sept 2013
+   Copyright 1997-2013, All Rights Reserved 
+
+  	
+   Copyright (C) Open Applications Group (1997-2013). All Rights Reserved.
+  
+  
+   This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+   License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+
+   For support, more information, or to report implementation bugs, please contact the Open Applications Group at oagis@openapplications.org.
+    
+   XML Schema 
+     
+    Name: /OAGi-BPI-Platform/org_openapplications_oagis/10_0/Model/BODs/SyncItemMaster.xsd-->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.openapplications.org/oagis/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/10">
+  <xsd:element id="oagis-id-bf8a6117bf854353bf98f62ef6ac51f4" name="SyncItemMaster" type="SyncItemMasterType">
+    <xsd:annotation>
+      <xsd:appinfo>Version 1.0</xsd:appinfo>
+      <xsd:documentation source="http://www.openapplications.org/oagis/10">Igor for version 10.1 changed somethingThe purpose of the SyncItemMaster is to supply Item information for goods or services to another business application module.  This BOD may also be initiated by the sending system upon some event occurring.
+
+This BOD is not for synchronizing ITEM quantities at each inventory location.   The SyncInventoryBalance Business Object Document is used for this purpose.
+
+There are many possible business applications in several environments that may use this capability. For example, a MRP, Inventory, or Manufacturing business application could use this to communicate item information. 
+
+This BOD can be used to synchronize items used in finished goods, raw materials, work-in-process or components in a bill of materials.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType id="oagis-id-fea26e14e87b463bbc6311b0c4f54d6d" name="SyncItemMasterType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>Version 1.0</xsd:appinfo>
+          <xsd:documentation source="http://www.openapplications.org/oagis/10">Is where the information that the BOD message carries is provided, in this case SyncItemMaster. The information consists of a Verb and one or more Nouns. The verb (Sync) indicates the action to be performed on the Noun (ItemMaster).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:any>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:8080/ws/oagis/itemmaster?xsd=../types/bod/SyncResponseItemMaster.xsd</con:url><con:content><![CDATA[<!--Schema agency: 	Open Applications Group 
+
+
+   OAGIS® Revision:    OAGIS 10_0  
+   Date:               09 Sept 2013
+   Copyright 1997-2013, All Rights Reserved 
+
+  	
+   Copyright (C) Open Applications Group (1997-2013). All Rights Reserved.
+  
+  
+   This is an OAGIS® BOD XML Schema (XSD) Definition.
+
+   License information for this file is provided in the file **OAGi License Agreement.txt** that is provided with this download package.
+
+   For support, more information, or to report implementation bugs, please contact the Open Applications Group at oagis@openapplications.org.
+    
+   XML Schema 
+     
+    Name: /OAGi-BPI-Platform/org_openapplications_oagis/10_0/Model/BODs/SyncResponseItemMaster.xsd-->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.openapplications.org/oagis/10" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.openapplications.org/oagis/10">
+  <xsd:element id="oagis-id-8ae462431e2b4cb09871da8e8aecf096" name="SyncResponseItemMaster" type="SyncResponseItemMasterType">
+    <xsd:annotation>
+      <xsd:appinfo>Version 1.0</xsd:appinfo>
+      <xsd:documentation source="http://www.openapplications.org/oagis/10">The purpose of the SyncResponseItemMaster is to supply Item information for goods or services to another business application module.  This BOD may also be initiated by the sending system upon some event occurring.
+
+This BOD is not for SyncResponsehronizing ITEM quantities at each inventory location.   The SyncResponseInventoryBalance Business Object Document is used for this purpose.
+
+There are many possible business applications in several environments that may use this capability. For example, a MRP, Inventory, or Manufacturing business application could use this to communicate item information. 
+
+This BOD can be used to SyncResponsehronize items used in finished goods, raw materials, work-in-process or components in a bill of materials.</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType id="oagis-id-4355eed19bd644d3a380a309d55400e1" name="SyncResponseItemMasterType">
+    <xsd:sequence>
+      <xsd:any minOccurs="0">
+        <xsd:annotation>
+          <xsd:appinfo>Version 1.0</xsd:appinfo>
+          <xsd:documentation source="http://www.openapplications.org/oagis/10">Is where the information that the BOD message carries is provided, in this case SyncResponseItemMaster. The information consists of a Verb and one or more Nouns. The verb (SyncResponse) indicates the action to be performed on the Noun (ItemMaster).</xsd:documentation>
+        </xsd:annotation>
+      </xsd:any>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ws/oagis/itemmaster</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="GetItemMaster" bindingOperationName="GetItemMaster" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/oagis/itemmaster</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.openapplications.org/oagis/10">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:GetItemMaster>
+         <!--You may enter ANY elements at this point-->
+      </ns:GetItemMaster>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username>userone</con:username><con:password>passwordone</con:password><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.soaeasy.org/ws/oagis/itemmaster/10/ItemMasterPortType/GetItemMasterRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="SyncItemMaster" bindingOperationName="SyncItemMaster" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ws/oagis/itemmaster</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.openapplications.org/oagis/10">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:SyncItemMaster>
+         <!--You may enter ANY elements at this point-->
+      </ns:SyncItemMaster>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username>userone</con:username><con:password>passwordone</con:password><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.soaeasy.org/ws/oagis/itemmaster/10/ItemMasterPortType/SyncItemMasterRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
