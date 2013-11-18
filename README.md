@@ -4,11 +4,10 @@ OAGIS ItemMaster Web Service
 http://soaeasy.org
 
 * OAGIS version 10 ItemMaster BOD
-* EJB3
+* JAX-WS
 * Apache CXF
-* Basic Authentication using JBoss AS 7.2
-
-And of course Java!
+* EJB3
+* Basic Authentication using WildFly 8.0.0
 
 License
 -------
