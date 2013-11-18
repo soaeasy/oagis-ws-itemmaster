@@ -72,6 +72,14 @@
     <!-- Plugins Versions                                                    -->
     <!-- ******************************************************************* -->
      <version.jar.plugin>2.4</version.jar.plugin>
+     <version.antrun.plugin>1.7</version.antrun.plugin>
+    <!-- ******************************************************************* -->
+    <!-- Wildfly Configuration                                               -->
+    <!-- ******************************************************************* -->
+    <wildfly.version>8.0.0.Beta1</wildfly.version>
+    <wildfly.runtime.type>standalone</wildfly.runtime.type>
+    <wildfly.install.parent.directory>${project.build.directory}/server</wildfly.install.parent.directory>
+    <wildfly.install.directory>${wildfly.install.parent.directory}/wildfly-${wildfly.version}</wildfly.install.directory>
   </properties>
 
   <dependencies>
@@ -100,18 +108,18 @@
       <scope>provided</scope>
     </dependency>
     <!-- ******************************************************************* -->
-    <!-- JBoss Dependencies                                                  -->
+    <!-- Wildfly Dependencies                                                -->
     <!-- ******************************************************************* -->
     <dependency>
-      <groupId>org.jboss.ws</groupId>
-      <artifactId>jbossws-api</artifactId>
-      <version>1.0.2.Final</version>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-ejb3</artifactId>
+      <version>${wildfly.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.jboss.ejb3</groupId>
-      <artifactId>jboss-ejb3-ext-api</artifactId>
-      <version>2.1.0</version>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-webservices-server-integration</artifactId>
+      <version>${wildfly.version}</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -132,28 +140,27 @@
       </resource>
     </resources>
     <plugins>
-<!--
       <plugin>
         <groupId>org.jvnet.jax-ws-commons</groupId>
         <artifactId>jaxws-maven-plugin</artifactId>
         <version>2.2</version>
         <executions>
           <execution>
+            <phase>generate-sources</phase>
             <goals>
               <goal>wsimport</goal>
             </goals>
             <configuration>
               <encoding>UTF-8</encoding>
-              <genJWS>true</genJWS>
+              <genJWS>false</genJWS>
               <sourceDestDir>${basedir}/src/main/java</sourceDestDir>
               <implDestDir>${basedir}/src/main/java</implDestDir>
-              <wsdlDirectory>${basedir}/src/main/resources/META-INF/oagis/10/contract</wsdlDirectory>
+              <wsdlDirectory>${basedir}/ws-repository/design/oagis/10/contract</wsdlDirectory>
               <wsdlLocation>META-INF/oagis/10/contract/ItemMaster.wsdl</wsdlLocation>
             </configuration>
           </execution>
         </executions>
       </plugin>
--->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -193,6 +200,208 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.wildfly</groupId>
+                  <artifactId>wildfly-dist</artifactId>
+                  <version>${wildfly.version}</version>
+                  <type>zip</type>
+                  <outputDirectory>${wildfly.install.parent.directory}</outputDirectory>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${version.antrun.plugin}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.9.2</version>
+          </dependency>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>ant-run-runtime-ws-artifacts</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                         classpathref="maven.plugin.classpath"/>
+                <taskdef resource="net/sf/antcontrib/antlib.xml"
+                         classpathref="maven.plugin.classpath"/>
+
+                <copy todir="${project.basedir}/src/main/resources/META-INF/oagis/10/contract" overwrite="true" force="true">
+                  <fileset dir="${basedir}/ws-repository/design/oagis/10/contract">
+                    <include name="**/*.wsdl"/>
+                  </fileset>
+                </copy>
+
+                <copy todir="${project.basedir}/src/main/resources/META-INF/oagis/10/types" overwrite="true" force="true">
+                  <fileset dir="${basedir}/ws-repository/runtime/oagis/10/types">
+                    <include name="**/*.xsd"/>
+                  </fileset>
+                </copy>
+
+              </target>
+            </configuration>
+          </execution>
+          <execution>
+            <id>ant-run-wildfly-configuration</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                         classpathref="maven.plugin.classpath"/>
+                <taskdef resource="net/sf/antcontrib/antlib.xml"
+                         classpathref="maven.plugin.classpath"/>
+
+                <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar"
+                      overwrite="true"
+                      tofile="${wildfly.install.directory}/${wildfly.runtime.type}/deployments/${project.artifactId}-${project.version}.jar"/>
+                      
+                <copy file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone-full.xml"
+                      overwrite="true"
+                      tofile="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone.xml"/>
+
+                  <replace file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone.xml">
+                    <replacefilter>
+                      <replacetoken><![CDATA[<security-domains>]]></replacetoken>
+                      <replacevalue><![CDATA[<security-domains>
+                <security-domain name="cxfservice-security-domain" cache-type="default">
+                    <authentication>
+                        <login-module code="UsersRoles" flag="required">
+                            <module-option name="usersProperties" value="cxfservice-users.properties"/>
+                            <module-option name="rolesProperties" value="cxfservice-roles.properties"/>
+                            <module-option name="unauthenticatedIdentity" value="nobody"/>
+                        </login-module>
+                    </authentication>
+                </security-domain>]]></replacevalue>
+                    </replacefilter>
+                  </replace>
+
+                  <replace file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/mgmt-users.properties">
+                    <replacefilter>
+                      <replacetoken><![CDATA[#admin=2a0923285184943425d1f53ddd58ec7a]]></replacetoken>
+                      <replacevalue><![CDATA[admin=3700d7058eaf10d5f82343fe021f3c8f]]></replacevalue>
+                    </replacefilter>
+                  </replace>
+
+                  <delete file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone-full.xml"/>
+                  <delete file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone-full-ha.xml"/>
+                  <delete file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/standalone-ha.xml"/>
+                  <delete file="${wildfly.install.directory}/${wildfly.runtime.type}/deployments/README.txt"/>
+                  <delete dir="${wildfly.install.directory}/${wildfly.runtime.type}/lib"/>
+                  <delete dir="${wildfly.install.directory}/${wildfly.runtime.type}/tmp"/>
+
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>
+    									org.apache.maven.plugins
+    								</groupId>
+    								<artifactId>
+    									maven-dependency-plugin
+    								</artifactId>
+    								<versionRange>[2.1,)</versionRange>
+    								<goals>
+    									<goal>unpack</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>
+    									org.apache.maven.plugins
+    								</groupId>
+    								<artifactId>
+    									maven-antrun-plugin
+    								</artifactId>
+    								<versionRange>[1.7,)</versionRange>
+    								<goals>
+    									<goal>run</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>
+    									org.jvnet.jax-ws-commons
+    								</groupId>
+    								<artifactId>
+    									jaxws-maven-plugin
+    								</artifactId>
+    								<versionRange>[2.2,)</versionRange>
+    								<goals>
+    									<goal>wsimport</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
