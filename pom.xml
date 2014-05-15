@@ -12,7 +12,7 @@
   <name>OAGIS version 10 - ItemMaster Web Service</name>
   <description>OAGIS version 10 - ItemMaster Web Service</description>
   <url>http://soaeasy.org</url>
-  <inceptionYear>2013</inceptionYear>
+  <inceptionYear>2014</inceptionYear>
 
   <licenses>
     <license>
@@ -59,7 +59,7 @@
     <manifest.bundle.symbolic.name>org.soaeasy</manifest.bundle.symbolic.name>
     <manifest.bundle.vendor>SOA Easy</manifest.bundle.vendor>
     <manifest.bundle.vendor.id>org.soaeasy</manifest.bundle.vendor.id>
-    <manifest.bundle.copyright>2013</manifest.bundle.copyright>
+    <manifest.bundle.copyright>2014</manifest.bundle.copyright>
     <manifest.bundle.license>http://soaeasy.org</manifest.bundle.license>
     <manifest.bundle.docurl>http://soaeasy.org</manifest.bundle.docurl>
     <manifest.bundle.version>${project.version}</manifest.bundle.version>
@@ -76,7 +76,7 @@
     <!-- ******************************************************************* -->
     <!-- Wildfly Configuration                                               -->
     <!-- ******************************************************************* -->
-    <wildfly.version>8.0.0.Beta1</wildfly.version>
+    <wildfly.version>8.1.0.CR1</wildfly.version>
     <wildfly.runtime.type>standalone</wildfly.runtime.type>
     <wildfly.install.parent.directory>${project.build.directory}/server</wildfly.install.parent.directory>
     <wildfly.install.directory>${wildfly.install.parent.directory}/wildfly-${wildfly.version}</wildfly.install.directory>
@@ -320,7 +320,7 @@
                   <replace file="${wildfly.install.directory}/${wildfly.runtime.type}/configuration/mgmt-users.properties">
                     <replacefilter>
                       <replacetoken><![CDATA[#admin=2a0923285184943425d1f53ddd58ec7a]]></replacetoken>
-                      <replacevalue><![CDATA[admin=3700d7058eaf10d5f82343fe021f3c8f]]></replacevalue>
+                      <replacevalue><![CDATA[admin=5aa070c9ab41abf5f09543f84435736f]]></replacevalue>
                     </replacefilter>
                   </replace>
 
